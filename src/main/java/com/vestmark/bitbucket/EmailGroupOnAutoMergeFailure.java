@@ -39,7 +39,7 @@ public class EmailGroupOnAutoMergeFailure {
             String repoId = repo.getName();
             String projectKey = repo.getProject().getKey();
             String id = Long.toString(p.getId());
-            String link = applicationPropertiesService.getBaseUrl() + "/projects/" + projectKey + "/repos/" + repoId + "/pull-requests/" + id
+            String link = applicationPropertiesService.getBaseUrl() + "/projects/" + projectKey + "/repos/" + repoId + "/pull-requests/" + id;
             MailMessage.Builder mailMessageBuilder = new MailMessage.Builder()
                             .to("bbianchi@vestmark.com")
                             .from("bitbucket@vestmark.com")

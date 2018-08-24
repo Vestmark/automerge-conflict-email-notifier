@@ -81,7 +81,11 @@
             <version>${javax.inject.version}</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.atlassian.soy</groupId>
+            <artifactId>soy-template-renderer-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- WIRED TEST RUNNER DEPENDENCIES -->
         <dependency>
             <groupId>com.atlassian.plugins</groupId>
