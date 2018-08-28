@@ -9,12 +9,12 @@
     <version>1.0.1</version>
 
     <organization>
-        <name>Example Company</name>
-        <url>http://www.example.com/</url>
+        <name>Vestmark</name>
+        <url>http://www.vestmark.com/</url>
     </organization>
 
-    <name>email-group-on-auto-merge-failure</name>
-    <description>This is the com.vestmark.bitbucket:email-group-on-auto-merge-failure plugin for Atlassian Bitbucket Server.</description>
+    <name>Auto Merge Conflict Notifier</name>
+    <description>This is the Auto Merge Conflict Notifier plugin for Atlassian Bitbucket Server.</description>
     <packaging>atlassian-plugin</packaging>
 
     <dependencyManagement>

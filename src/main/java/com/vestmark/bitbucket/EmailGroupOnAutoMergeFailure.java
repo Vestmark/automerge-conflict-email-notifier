@@ -18,33 +18,42 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 import javax.annotation.Nonnull;
 
+import com.atlassian.sal.api.pluginsettings.PluginSettings;
+import com.atlassian.sal.api.pluginsettings.PluginSettingsFactory;
+
 @Component("EmailGroupOnAutoMergeFailure")
 public class EmailGroupOnAutoMergeFailure {
     private final MailService mailService;
     private final ApplicationPropertiesService applicationPropertiesService;
+    private final PluginSettingsFactory pluginSettingsFactory;
 
     @Autowired
     public EmailGroupOnAutoMergeFailure(@ComponentImport MailService mailService,
+                                        @ComponentImport PluginSettingsFactory pluginSettingsFactory,
                                         @ComponentImport ApplicationPropertiesService applicationPropertiesService) {
         this.mailService =  mailService;
         this.applicationPropertiesService = applicationPropertiesService;
+        this.pluginSettingsFactory = pluginSettingsFactory;
     }
     @EventListener
     public void onPullRequestCreated(PullRequestOpenedEvent event) {
         PullRequest p = event.getPullRequest();
-        if (p.getTitle().equals("Automatic merge failure") || Boolean.TRUE) {
+        Repository repo = p.getFromRef().getRepository();
+        String repoId = repo.getName();
+        PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
+        String email = pluginSettings.get("com.vestmark.bitbucket.email-group-on-auto-merge-failure." + repoId + ".email").toString();
+        System.out.println("Value from settings = " +  email);
+        if ((p.getTitle().equals("Automatic merge failure") && email != null && email != "")) {
             System.out.println("baseURL " + applicationPropertiesService.getBaseUrl());
             String culprit = p.getAuthor().getUser().getDisplayName();
-            Repository repo = p.getFromRef().getRepository();
-            String repoId = repo.getName();
             String projectKey = repo.getProject().getKey();
             String id = Long.toString(p.getId());
             String link = applicationPropertiesService.getBaseUrl() + "/projects/" + projectKey + "/repos/" + repoId + "/pull-requests/" + id;
             MailMessage.Builder mailMessageBuilder = new MailMessage.Builder()
-                            .to("bbianchi@vestmark.com")
+                            .to(email)
                             .from("bitbucket@vestmark.com")
-                            .text("<html><body><p>This is the body</p></body></html>")
-                            .subject("Message from Auto Merge Detector")
+                            .text("<html><body><p>Automatic merging has failed due to a conflict; a <a href=\"" + link + "\">pull request</a> has been opened on " + culprit + "'s behalf</p></body></html>")
+                            .subject("Bitbucket Auto Merge Conflict Detected")
                             .header("Content-type", "text/html; charset=UTF-8");
 
             if (mailService.isHostConfigured()) {

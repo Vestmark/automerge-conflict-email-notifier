@@ -1,63 +1,8 @@
 {namespace plugin}
 
 /**
- * @param project Project object
- */
-{template .project}
-<html>
-<head>
-    <meta name="decorator" content="bitbucket.project.general">
-    <meta name="projectKey" content="{$project.key}">
-    <meta name="activeTab" content="project-plugin-tab">
-    <title>{$project.key} / Example Tab</title>
-</head>
-<body>
-    <h3>Project: {$project.key}</h3>
-    <p>Welcome to my plugin tab in the project page.</p>
-</body>
-</html>
-{/template}
-
-/**
- * @param project Project object
- */
-{template .projectSettings}
-<html>
-<head>
-    <meta name="decorator" content="bitbucket.project.settings">
-    <meta name="projectKey" content="{$project.key}">
-    <meta name="activeTab" content="project-settings-plugin-tab">
-    <title>{$project.key} / Example Tab</title>
-</head>
-<body>
-    <h3>Project: {$project.key}</h3>
-    <p>Welcome to my plugin tab in the project settings page.</p>
-</body>
-</html>
-{/template}
-
-/**
  * @param repository Repository object
- */
-{template .repository}
-<html>
-<head>
-    <meta name="decorator" content="bitbucket.repository.general">
-    <meta name="projectKey" content="{$repository.project.key}">
-    <meta name="repositorySlug" content="{$repository.slug}">
-    <meta name="activeTab" content="repository-plugin-tab">
-    <title>{$repository.slug} / Example Tab</title>
-</head>
-<body>
-    <h3>Repository: {$repository.slug}</h3>
-    <p>Welcome to my plugin tab in the repository page.</p>
-</body>
-</html>
-{/template}
-
-
-/**
- * @param repository Repository object
+*  @param email String object
  */
 {template .repositorySettings}
 <html>
@@ -70,63 +15,23 @@
 </head>
 <body>
     <h3>Repository: {$repository.slug}</h3>
-    <p>Welcome to my plugin tab in the repository settings page.</p>
+    <p>Auto Merge Conflict Notification Plugin Page</p>
+    <p>Current Notification Email: {$email}</p>
+
+    <form class="aui" method="post">
+        <div class="field-group">
+        <label for="comment-name">Email to notify when auto merges fail
+        <span class="aui-icon icon-required">(required)</span></label>
+            <input class="text medium-field" type="text" id="email" name="email" placeholder="New Email">
+        <div class="buttons-container">
+            <div class="buttons">
+                <input class="button submit" type="submit" value="Save" id="save-button">
+                <a class="cancel" href="#">Cancel</a>
+            </div>
+        </div>
+    </form>
+
 </body>
 </html>
 {/template}
 
-/**
- * @param pullRequest PullRequest object
- */
-{template .pullRequest}
-<html>
-<head>
-    <meta name="decorator" content="bitbucket.pullrequest.view">
-    <meta name="projectKey" content="{$pullRequest.toRef.repository.project.key}">
-    <meta name="repositorySlug" content="{$pullRequest.toRef.repository.slug}">
-    <meta name="pullRequestId" content="{$pullRequest.id}">
-    <meta name="activeTab" content="pull-request-plugin-tab">
-    <title>{$pullRequest.toRef.repository.slug}-{$pullRequest.id} / Example Tab</title>
-</head>
-<body>
-    <h3>Pull Request: {$pullRequest.id}</h3>
-    <p>Welcome to my plugin tab in the pull request page.</p>
-</body>
-</html>
-{/template}
-
-/**
- * @param user ApplicationUser object which is in the context provided by ProfileServlet
- */
-{template .profile}
-<html>
-<head>
-    <meta name="decorator" content="bitbucket.users.profile">
-    <meta name="userSlug" content="{$user.slug}">
-    <meta name="activeTab" content="profile-plugin-tab">
-    <title>{$user.displayName} / Profile Tab</title>
-</head>
-<body>
-    <h3>Hello, {$user.displayName}</h3>
-    <p>Welcome to my plugin tab in the profile page.</p>
-</body>
-</html>
-{/template}
-
-/**
- * @param user ApplicationUser object which is in the context provided by ProfileServlet
- */
-{template .account}
-<html>
-<head>
-    <meta name="decorator" content="bitbucket.users.account">
-    <meta name="userSlug" content="{$user.slug}">
-    <meta name="activeTab" content="account-plugin-tab">
-    <title>{$user.displayName} / Profile Tab</title>
-</head>
-<body>
-    <h3>Hello, {$user.displayName}</h3>
-    <p>Welcome to my plugin tab in the account page.</p>
-</body>
-</html>
-{/template}

@@ -24,10 +24,10 @@
         <param name="iconClass" value="aui-icon-small aui-iconfont-edit" />
     </web-item> -->
     <web-item key="repository-settings-plugin-tab" name="Repository settings navigation tab"
-              section="bitbucket.repository.settings.panel/repository-settings-section" weight="50">
-        <label>My plugin</label>
+              section="bitbucket.repository.settings.panel/repository-settings-addons-section" weight="50">
+        <label>Auto merge conflict email</label>
         <link>/plugins/servlet/repository/${repository.project.key}/${repository.slug}/settings</link>
-        <tooltip>Hooray, we have a tab!</tooltip>
+        <tooltip>Use this plugin to add an email to notify when an auto merge conflict occurs</tooltip>
     </web-item>
 
 </atlassian-plugin>
