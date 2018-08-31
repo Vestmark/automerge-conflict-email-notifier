@@ -41,10 +41,12 @@ public class EmailGroupOnAutoMergeFailure {
         Repository repo = p.getFromRef().getRepository();
         String repoId = repo.getName();
         PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
+        if (pluginSettings.get("com.vestmark.bitbucket.email-group-on-auto-merge-failure." + repoId + ".email") == null) {
+          return;
+        }
         String email = pluginSettings.get("com.vestmark.bitbucket.email-group-on-auto-merge-failure." + repoId + ".email").toString();
-        System.out.println("Value from settings = " +  email);
+        String subjectText= "Bitbucket Auto Merge Conflict Detected";
         if ((p.getTitle().equals("Automatic merge failure") && email != null && email != "")) {
-            System.out.println("baseURL " + applicationPropertiesService.getBaseUrl());
             String culprit = p.getAuthor().getUser().getDisplayName();
             String projectKey = repo.getProject().getKey();
             String id = Long.toString(p.getId());
@@ -53,17 +55,11 @@ public class EmailGroupOnAutoMergeFailure {
                             .to(email)
                             .from("bitbucket@vestmark.com")
                             .text("<html><body><p>Automatic merging has failed due to a conflict; a <a href=\"" + link + "\">pull request</a> has been opened on " + culprit + "'s behalf</p></body></html>")
-                            .subject("Bitbucket Auto Merge Conflict Detected")
+                            .subject(subjectText)
                             .header("Content-type", "text/html; charset=UTF-8");
-
             if (mailService.isHostConfigured()) {
-                System.out.println("In Mail Message block!!!");
                 mailService.submit(mailMessageBuilder.build());
-            } else {
-                System.out.println("Mail Server not configured");
             }
         }
-        System.out.println("PR opened!!!!!!!!!!!!!!!!");
-        System.out.println("title = " + p.getTitle());
     }
 }

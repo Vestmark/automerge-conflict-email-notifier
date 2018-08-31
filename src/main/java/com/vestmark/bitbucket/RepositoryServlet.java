@@ -34,7 +34,6 @@ public class RepositoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("IN REPO SERVLET!!!!!!!");
         String pathInfo = req.getPathInfo();
         String[] components = pathInfo.split("/");
         if (components.length < 3) {
@@ -52,13 +51,11 @@ public class RepositoryServlet extends HttpServlet {
             email = pluginSettings.get("com.vestmark.bitbucket.email-group-on-auto-merge-failure." + repository.getName() + ".email").toString();
         }
         String template = "plugin.repositorySettings";
-        //render(resp, template, ImmutableMap.<String, Object>of("repository", repository));
         render(resp, template, ImmutableMap.<String, Object>builder().put("repository", repository).put("email", email).build());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("IN doPost!!!");
         String pathInfo = req.getPathInfo();
         String[] components = pathInfo.split("/");
         if (components.length < 3) {
@@ -71,13 +68,11 @@ public class RepositoryServlet extends HttpServlet {
             return;
         }
         String email =  req.getParameter("email");
-        System.out.println("Email = " + email);
         if (email != "") {
           PluginSettings pluginSettings = pluginSettingsFactory.createGlobalSettings();
           pluginSettings.put("com.vestmark.bitbucket.email-group-on-auto-merge-failure." + repository.getName() + ".email", email);
         }
         String template = "plugin.repositorySettings";
-        //render(resp, template, ImmutableMap.<String, Object>of("repository", repository));
         render(resp, template, ImmutableMap.<String, Object>builder().put("repository", repository).put("email", email).build());
     }
 

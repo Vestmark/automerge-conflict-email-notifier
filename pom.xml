@@ -13,8 +13,8 @@
         <url>http://www.vestmark.com/</url>
     </organization>
 
-    <name>Auto Merge Conflict Notifier</name>
-    <description>This is the Auto Merge Conflict Notifier plugin for Atlassian Bitbucket Server.</description>
+    <name>AutoMerge Conflict Email Notifier</name>
+    <description>This is the Auto Merge Conflict Email Notifier plugin for Atlassian Bitbucket Server.  It allows a notification email to be configured (per repository) to be notified in the event of a merge conflict.</description>
     <packaging>atlassian-plugin</packaging>
 
     <dependencyManagement>
