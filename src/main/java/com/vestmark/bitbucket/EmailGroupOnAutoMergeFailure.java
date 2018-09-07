@@ -45,7 +45,7 @@ public class EmailGroupOnAutoMergeFailure {
           return;
         }
         String email = pluginSettings.get("com.vestmark.bitbucket.email-group-on-auto-merge-failure." + repoId + ".email").toString();
-        String subjectText= "Bitbucket Auto Merge Conflict Detected";
+        String subjectText= "BitBucket Auto Merge Conflict Detected";
         if ((p.getTitle().equals("Automatic merge failure") && email != null && email != "")) {
             String culprit = p.getAuthor().getUser().getDisplayName();
             String projectKey = repo.getProject().getKey();
@@ -53,7 +53,7 @@ public class EmailGroupOnAutoMergeFailure {
             String link = applicationPropertiesService.getBaseUrl() + "/projects/" + projectKey + "/repos/" + repoId + "/pull-requests/" + id;
             MailMessage.Builder mailMessageBuilder = new MailMessage.Builder()
                             .to(email)
-                            .from("bitbucket@vestmark.com")
+                            .from("BitBucket")
                             .text("<html><body><p>Automatic merging has failed due to a conflict; a <a href=\"" + link + "\">pull request</a> has been opened on " + culprit + "'s behalf</p></body></html>")
                             .subject(subjectText)
                             .header("Content-type", "text/html; charset=UTF-8");
